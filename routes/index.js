@@ -1,3 +1,4 @@
+
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
@@ -18,7 +19,7 @@ router.post('/register',async (req,res) => {
   let username = req.body.username
   let password = req.body.password
 
-  let persistedUser = await models.User.findAny({
+  let persistedUser = await models.Users.findOne({
     where: {
       username: username
     }
@@ -37,7 +38,7 @@ router.post('/register',async (req,res) => {
           password: hash
         })
 
-        let savedUser = await user.save()
+        let savedUser = await users.save()
         if(savedUser != null) {
           res.redirect('/login')
         } else {
@@ -59,7 +60,7 @@ router.post('/login', async (req,res) => {
   let username = req.body.username
   let password = req.body.password
 
-  let user = await models.User.findAny({
+  let user = await models.users.findOne({
     where: {
       username: username
     }
